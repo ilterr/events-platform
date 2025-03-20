@@ -1,31 +1,16 @@
-import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLIC_KEY;
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 function App() {
-  const [instruments, setInstruments] = useState([]);
-
-  useEffect(() => {
-    getInstruments();
-  }, []);
-
-  async function getInstruments() {
-    const { data } = await supabase.from("instruments").select();
-    setInstruments(data);
-  }
-
-  return (
-    <ul>
-      {instruments.map((instrument) => (
-        <li key={instrument.name}>{instrument.name}</li>
-      ))}
-    </ul>
-  );
+ return (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home />} />
+    </Routes>
+  </BrowserRouter>
+ )
 }
 
 export default App;
