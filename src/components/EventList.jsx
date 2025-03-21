@@ -1,11 +1,15 @@
-import { useEvents } from '../hooks/fetchEvents';
-import EventCard from './EventCard';
+import { useEvents } from "../hooks/fetchEvents";
+import EventCard from "./EventCard";
 
 const EventsList = () => {
   const { events, isLoading, error } = useEvents();
 
-  if (isLoading) {return <section>Is loading...</section>}
-  if (error) { return <section>Error fetching events: {error}</section>}
+  if (isLoading) {
+    return <section>Is loading...</section>;
+  }
+  if (error) {
+    return <section>Error getting events: {error}</section>;
+  }
 
   return (
     <div>
