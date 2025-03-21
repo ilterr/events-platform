@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import supabase from '../supabase-client';
+import { useState, useEffect } from "react";
+import supabase from "../supabase-client";
 
 export const useEvents = () => {
   const [events, setEvents] = useState([]);
@@ -10,7 +10,7 @@ export const useEvents = () => {
     const fetchEvents = async () => {
       setIsLoading(true);
       try {
-        const { data, error } = await supabase.from('events').select('*');
+        const { data, error } = await supabase.from("events").select("*");
         if (error) throw error;
         setEvents(data);
       } catch (error) {
@@ -23,6 +23,5 @@ export const useEvents = () => {
     fetchEvents();
   }, []);
 
-  return { events, isLoading, error};
+  return { events, isLoading, error };
 };
-
