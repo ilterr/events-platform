@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import MuiLink from "@mui/material/Link";
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 
 const SignUp = () => {
+  const { signUp } = UserAuth();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({
     name: "",
@@ -16,9 +27,6 @@ const SignUp = () => {
     password: "",
   });
 
-  const { signUp } = UserAuth();
-  const navigate = useNavigate();
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -30,7 +38,6 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError({});
     try {
       await signUp(formData);
       navigate("/dashboard");
@@ -42,59 +49,82 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSignUp} className="max-w md m-auto pt-24">
-        <h2 className="font-bold pb-2">Sign Up</h2>
-        <p>
-          Already have an account? <Link to="/signin">Sign In</Link>
-        </p>
-        <div className="flex flex-col py-4">
-          <input
+    <Box sx={{ maxWidth: 400, mx: "auto", mt: 8 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          Sign Up
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+          Already have an account?
+          <MuiLink component={Link} to="/signin" sx={{ ml: 1 }}>
+            Sign In
+          </MuiLink>
+        </Typography>
+
+        <Box component="form" onSubmit={handleSignUp} sx={{ mt: 3 }}>
+          <TextField
+            fullWidth
+            label="Name"
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="p-3 mt-6"
-            type="text"
-            placeholder="Name"
+            error={!!error.name}
+            helperText={error.name}
+            margin="normal"
           />
-          {error?.name && (
-            <p className="text-red-500 text-sm mt-1">{error.name}</p>
-          )}
-          <input
+
+          <TextField
+            fullWidth
+            label="Email"
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
-            className="p-3 mt-6"
-            type="email"
-            placeholder="Email"
+            error={!!error.email}
+            helperText={error.email}
+            margin="normal"
           />
-          {error?.email && (
-            <p className="text-red-500 text-sm mt-1">{error.email}</p>
-          )}
-          <input
+
+          <TextField
+            fullWidth
+            label="Password"
             name="password"
+            type="password"
             value={formData.password}
             onChange={handleChange}
-            className="p-3 mt-6"
-            type="password"
-            placeholder="Password"
+            error={!!error.password}
+            helperText={error.password}
+            margin="normal"
           />
-          {error?.password && (
-            <p className="text-red-500 text-sm mt-1">{error.password}</p>
-          )}
-          <button
-            className="p-3 mt-6 w-full"
+          <Button
             type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
             disabled={isLoading}
           >
-            {isLoading ? "Signing Up..." : "Sign Up"}
-          </button>
-          {error?.submit && (
-            <p className="text-red-500 text-center mt-2">{error.submit}</p>
+            {isLoading ? (
+              <>
+                <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+                Signing Up...
+              </>
+            ) : (
+              "Sign Up"
+            )}
+          </Button>
+          {error.submit && (
+            <Typography
+              color="error"
+              align="center"
+              sx={{ mt: 2 }}
+              role="alert"
+            >
+              {error.submit}
+            </Typography>
           )}
-        </div>
-      </form>
-    </div>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 

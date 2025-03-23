@@ -1,8 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import MuiLink from "@mui/material/Link";
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 
 const SignIn = () => {
+  const { signIn } = UserAuth();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({
     email: "",
@@ -13,9 +24,6 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-
-  const { signIn } = UserAuth();
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +36,6 @@ const SignIn = () => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError({});
     try {
       await signIn(formData);
       navigate("/dashboard");
@@ -40,49 +47,73 @@ const SignIn = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSignIn} className="max-w md m-auto pt-24">
-        <h2 className="font-bold pb-2">Sign In</h2>
-        <p>
-          Don't have an account? <Link to="/signup">Sign up</Link>
-        </p>
-        <div className="flex flex-col py-4">
-          <input
+    <Box sx={{ maxWidth: 400, mx: "auto", mt: 8 }}>
+      <Paper elevation={3} sx={{ p: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          Sign In
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+          Don't have an account?
+          <MuiLink component={Link} to="/signup" sx={{ ml: 1 }}>
+            Sign up
+          </MuiLink>
+        </Typography>
+
+        <Box component="form" onSubmit={handleSignIn} sx={{ mt: 3 }}>
+          <TextField
+            fullWidth
+            label="Email"
             name="email"
+            type="email"
             value={formData.email}
             onChange={handleChange}
-            className="p-3 mt-6"
-            type="email"
-            placeholder="Email"
+            error={!!error.email}
+            helperText={error.email}
+            margin="normal"
           />
-          {error?.email && (
-            <p className="text-red-500 text-sm mt-1">{error.email}</p>
-          )}
-          <input
+
+          <TextField
+            fullWidth
+            label="Password"
             name="password"
+            type="password"
             value={formData.password}
             onChange={handleChange}
-            className="p-3 mt-6"
-            type="password"
-            placeholder="Password"
+            error={!!error.password}
+            helperText={error.password}
+            margin="normal"
           />
-          {error?.password && (
-            <p className="text-red-500 text-sm mt-1">{error.password}</p>
-          )}
-          <button
-            className="p-3 mt-6 w-full"
+
+          <Button
             type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
             disabled={isLoading}
+            sx={{ mt: 3 }}
           >
-            {isLoading ? "Signing In..." : "Sign In"}
-          </button>
-          {error?.submit && (
-            <p className="text-red-500 text-center mt-2">{error.submit}</p>
+            {isLoading ? (
+              <>
+                <CircularProgress size={24} color="inherit" sx={{ mr: 1 }} />
+                Signing In...
+              </>
+            ) : (
+              "Sign In"
+            )}
+          </Button>
+          {error.submit && (
+            <Typography
+              color="error"
+              align="center"
+              sx={{ mt: 2 }}
+              role="alert"
+            >
+              {error.submit}
+            </Typography>
           )}
-        </div>
-      </form>
-    </div>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
-
 export default SignIn;
