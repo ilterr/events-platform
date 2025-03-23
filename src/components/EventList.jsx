@@ -1,13 +1,13 @@
 import { Box, Typography, Grid2, CircularProgress, Alert } from "@mui/material";
 import EventCard from "./EventCard";
-import { useEvents } from "../hooks/fetchEvents";
+import { useEvents } from "../hooks/useEvents";
 
 const EventsList = () => {
   const { events, isLoading, error } = useEvents();
 
   if (isLoading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center", p: 4 }}>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
         <CircularProgress />
       </Box>
     );
@@ -15,10 +15,14 @@ const EventsList = () => {
 
   if (error) {
     return (
-      <Alert severity="error" sx={{ mt: 2 }}>
-        Error getting events: {error}
-      </Alert>
+      <Typography color="error" align="center" role="alert">
+        Error loading events: {error}
+      </Typography>
     );
+  }
+
+  if (events.length === 0) {
+    return <Typography>No upcoming events found.</Typography>;
   }
 
   return (

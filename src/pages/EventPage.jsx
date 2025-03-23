@@ -23,17 +23,17 @@ const EventPage = () => {
     return <CircularProgress />;
   }
 
-  if (error) {
-    return <Alert severity="error">Error loading event: {error}</Alert>;
-  }
-
   if (!event) {
-    return <Alert severity="info">Event not found</Alert>;
+    return (
+      <Typography color="info" align="center">
+        Event not found
+      </Typography>
+    );
   }
 
   return (
     <Box sx={{ maxWidth: 800, mx: "auto", p: 3 }}>
-      <Card elevation={3}>
+      <Card elevation={5}>
         {event.image_url && (
           <CardMedia
             component="img"
@@ -69,6 +69,11 @@ const EventPage = () => {
           <Box sx={{ mt: 3 }}>
             <Chip color="primary" label="Join us!" clickable />
           </Box>
+          {error && (
+            <Typography color="error" align="center">
+              Error loading event: {error}
+            </Typography>
+          )}
         </CardContent>
       </Card>
     </Box>

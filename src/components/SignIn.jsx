@@ -36,7 +36,6 @@ const SignIn = () => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError({});
     try {
       await signIn(formData);
       navigate("/dashboard");
@@ -102,9 +101,13 @@ const SignIn = () => {
               "Sign In"
             )}
           </Button>
-
           {error.submit && (
-            <Typography color="error" align="center" sx={{ mt: 2 }}>
+            <Typography
+              color="error"
+              align="center"
+              sx={{ mt: 2 }}
+              role="alert"
+            >
               {error.submit}
             </Typography>
           )}

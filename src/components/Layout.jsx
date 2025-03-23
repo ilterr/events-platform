@@ -2,17 +2,19 @@ import { AppBar, Toolbar, Typography, Container, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Layout({ children }) {
   const { session, signOut } = UserAuth();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const handleSignOut = async () => {
     try {
       await signOut();
       navigate("/");
     } catch (error) {
-      console.error(error);
+      setError(error);
     }
   };
 
@@ -52,6 +54,11 @@ function Layout({ children }) {
           )}
         </Toolbar>
       </AppBar>
+      {error && (
+        <Typography color="error" align="center" role="alert">
+          {error}
+        </Typography>
+      )}
       <Container maxWidth="lg" sx={{ py: 4 }}>
         {children}
       </Container>
