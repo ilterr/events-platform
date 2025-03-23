@@ -8,7 +8,6 @@ import {
   CardContent,
   Chip,
   CircularProgress,
-  Alert,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
