@@ -6,17 +6,54 @@ import {
   Card,
   CardMedia,
   CardContent,
-  Chip,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useEventById } from "../hooks/useEventById";
+import { useEventRegistration } from "../hooks/useEventRegistration";
+import { UserAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const EventPage = () => {
   const { id } = useParams();
   const { event, isLoading, error } = useEventById(id);
+  const { session } = UserAuth();
+  const navigate = useNavigate();
+
+  const userId = session?.user?.id;
+  const { isRegistered, registerForEvent } = useEventRegistration(id, userId);
+
+  const handleRegister = async () => {
+    if (!session) {
+      navigate("/login");
+      return;
+    }
+
+    const registered = await registerForEvent();
+    if (registered) {
+      navigate("/dashboard");
+    }
+  };
+  const addToGoogleCalendar = () => {
+    if (!event) return;
+
+    const dateStr = event.event_date.replace(/-/g, "");
+    const startTime = event.start_time.replace(/:/g, "");
+    const endTime = event.end_time.replace(/:/g, "");
+    const startDateTime = `${dateStr}T${startTime}00`;
+    const endDateTime = `${dateStr}T${endTime}00`;
+    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+      event.name
+    )}&details=${encodeURIComponent(
+      event.description
+    )}&location=${encodeURIComponent(
+      event.location
+    )}&dates=${startDateTime}/${endDateTime}`;
+
+    window.open(url, "_blank");
+  };
 
   if (isLoading) {
     return <CircularProgress />;
@@ -52,7 +89,6 @@ const EventPage = () => {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-            <AccessTimeIcon fontSize="small" sx={{ mr: 1 }} />
             <Typography variant="body1">
               {event.start_time.slice(0, 5)} - {event.end_time.slice(0, 5)}
             </Typography>
@@ -66,7 +102,20 @@ const EventPage = () => {
           <Typography variant="body1">{event.description}</Typography>
 
           <Box sx={{ mt: 3 }}>
-            <Chip color="primary" label="Join us!" clickable />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleRegister}
+            >
+              {isRegistered ? "Unregister" : "Register"}
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<CalendarTodayIcon />}
+              onClick={addToGoogleCalendar}
+            >
+              Add to GoogleCalendar
+            </Button>
           </Box>
           {error && (
             <Typography color="error" align="center">
