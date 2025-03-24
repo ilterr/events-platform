@@ -7,9 +7,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
 import EventPage from "./pages/EventPage";
 import CreateEvent from "./components/CreateEvent";
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function App() {
   return (
@@ -21,12 +20,12 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/events/:id" element={<EventPage />} />
           <Route path="/createevent" element={<CreateEvent />} />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
             }
           />
         </Routes>
