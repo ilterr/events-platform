@@ -6,18 +6,36 @@ import {
   Card,
   CardMedia,
   CardContent,
-  Chip,
   CircularProgress,
   Button,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useEventById } from "../hooks/useEventById";
+import { useEventRegistration } from "../hooks/useEventRegistration";
+import { UserAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const EventPage = () => {
   const { id } = useParams();
   const { event, isLoading, error } = useEventById(id);
+  const { session } = UserAuth();
+  const navigate = useNavigate();
 
+  const userId = session?.user?.id;
+  const { isRegistered, registerForEvent } = useEventRegistration(id, userId);
+
+  const handleRegister = async () => {
+    if (!session) {
+      navigate("/login");
+      return;
+    }
+
+    const registered = await registerForEvent();
+    if (registered) {
+      navigate("/dashboard");
+    }
+  };
   const addToGoogleCalendar = () => {
     if (!event) return;
 
@@ -84,7 +102,13 @@ const EventPage = () => {
           <Typography variant="body1">{event.description}</Typography>
 
           <Box sx={{ mt: 3 }}>
-            <Chip color="primary" label="Join us!" clickable />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleRegister}
+            >
+              {isRegistered ? "Unregister" : "Register"}
+            </Button>
             <Button
               variant="outlined"
               startIcon={<CalendarTodayIcon />}
