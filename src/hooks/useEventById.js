@@ -7,7 +7,7 @@ export const useEventById = (id) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchEvent = async () => {
+    const fetchEventById = async () => {
       setIsLoading(true);
       try {
         const { data, error } = await supabase
@@ -25,7 +25,7 @@ export const useEventById = (id) => {
       }
     };
 
-    fetchEvent();
+    fetchEventById();
   }, [id]);
 
   return { event, isLoading, error };

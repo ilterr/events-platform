@@ -1,4 +1,5 @@
-import { Box, Typography, Grid2, CircularProgress, Alert } from "@mui/material";
+import { Box, Typography, CircularProgress } from "@mui/material";
+import Grid from "@mui/material/Grid2";
 import EventCard from "./EventCard";
 import { useEvents } from "../hooks/useEvents";
 
@@ -30,13 +31,13 @@ const EventsList = () => {
       <Typography variant="h4" component="h1" gutterBottom>
         Upcoming Events
       </Typography>
-      <Grid2 container spacing={3}>
+      <Grid container spacing={3}>
         {events.map((event) => (
-          <Grid2 size={{ xs: 12, sm: 6, md: 4 }} key={event.id}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }} key={event.id}>
             <EventCard event={event} />
-          </Grid2>
+          </Grid>
         ))}
-      </Grid2>
+      </Grid>
       {events.length === 0 && (
         <Typography>No upcoming events found.</Typography>
       )}
