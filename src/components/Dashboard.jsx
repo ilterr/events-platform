@@ -105,7 +105,7 @@ const Dashboard = () => {
         </Grid>
 
         {userRole === "staff" && (
-          <Grid xs={12} sm={6} md={4}>
+          <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Paper
               sx={{
                 p: 3,

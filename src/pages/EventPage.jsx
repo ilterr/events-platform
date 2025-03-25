@@ -15,27 +15,35 @@ import { useEventById } from "../hooks/useEventById";
 import { useEventRegistration } from "../hooks/useEventRegistration";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-
+import { useUserEvents } from "../hooks/useUserEvents";
 const EventPage = () => {
   const { id } = useParams();
   const { event, isLoading, error } = useEventById(id);
   const { session } = UserAuth();
   const navigate = useNavigate();
-
   const userId = session?.user?.id;
-  const { isRegistered, registerForEvent } = useEventRegistration(id, userId);
+  const { isRegistered, registerForEvent, unregisterFromEvent } =
+    useEventRegistration(id, userId);
+  const { refreshEvents } = useUserEvents(userId);
 
   const handleRegister = async () => {
     if (!session) {
-      navigate("/login");
+      navigate("/signin");
       return;
     }
 
-    const registered = await registerForEvent();
-    if (registered) {
-      navigate("/dashboard");
+    let result;
+
+    if (isRegistered) {
+      result = await unregisterFromEvent();
+    } else {
+      result = await registerForEvent();
+    }
+    if (result) {
+      refreshEvents();
     }
   };
+
   const addToGoogleCalendar = () => {
     if (!event) return;
 
@@ -101,7 +109,7 @@ const EventPage = () => {
 
           <Typography variant="body1">{event.description}</Typography>
 
-          <Box sx={{ mt: 3 }}>
+          <Box sx={{ mt: 3, display: "flex", gap: 2 }}>
             <Button
               variant="contained"
               color="primary"

@@ -5,6 +5,11 @@ export const useUserEvents = (userId) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refresh, setRefresh] = useState(0);
+
+  const refreshEvents = () => {
+    setRefresh((prev) => prev + 1);
+  };
 
   useEffect(() => {
     const fetchUserEvents = async () => {
@@ -27,7 +32,7 @@ export const useUserEvents = (userId) => {
     };
 
     fetchUserEvents();
-  }, [userId]);
+  }, [userId, refresh]);
 
-  return { events, isLoading, error };
+  return { events, isLoading, error, refreshEvents };
 };
