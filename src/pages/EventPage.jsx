@@ -11,11 +11,15 @@ import {
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useEventById } from "../hooks/useEventById";
 import { useEventRegistration } from "../hooks/useEventRegistration";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useUserEvents } from "../hooks/useUserEvents";
+import { deleteEvent } from "../services/eventService";
+
 const EventPage = () => {
   const { id } = useParams();
   const { event, isLoading, error } = useEventById(id);
@@ -25,6 +29,14 @@ const EventPage = () => {
   const { isRegistered, registerForEvent, unregisterFromEvent } =
     useEventRegistration(id, userId);
   const { refreshEvents } = useUserEvents(userId);
+  const { userRole } = UserAuth();
+
+  const handleDelete = async () => {
+    const result = await deleteEvent(id);
+    if (result.success) {
+      navigate("/");
+    }
+  };
 
   const handleRegister = async () => {
     if (!session) {
@@ -87,10 +99,32 @@ const EventPage = () => {
           />
         )}
         <CardContent sx={{ p: 3 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            {event.name}
-          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h4" component="h1" gutterBottom>
+              {event.name}
+            </Typography>
 
+            {userRole === "staff" && (
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<EditIcon />}
+                  onClick={() => navigate(`/events/${id}/edit`)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  startIcon={<DeleteIcon />}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+              </Box>
+            )}
+          </Box>
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <CalendarTodayIcon fontSize="small" sx={{ mr: 1 }} />
             <Typography variant="body1">{event.event_date}</Typography>

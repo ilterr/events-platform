@@ -3,8 +3,8 @@ import { UserAuth } from "../context/AuthContext";
 import { Navigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 
-const PrivateRoute = ({ children }) => {
-  const { session } = UserAuth();
+const PrivateRoute = ({ children, requiredRole }) => {
+  const { session, userRole } = UserAuth();
 
   if (session === undefined) {
     return (
@@ -13,7 +13,16 @@ const PrivateRoute = ({ children }) => {
       </Box>
     );
   }
-  return session ? children : <Navigate to="/signin" />;
+
+  if (!session) {
+    return <Navigate to="/signin" />;
+  }
+
+  if (requiredRole && userRole !== requiredRole) {
+    return <Navigate to="/" />;
+  }
+
+  return children;
 };
 
 export default PrivateRoute;
