@@ -47,9 +47,11 @@ const CreateEvent = () => {
         status: "upcoming",
       });
 
-      if (error);
-      setError(error.message);
-      navigate("/dashboard");
+      if (error) {
+        setError(error.message);
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       setError(error.message);
     } finally {

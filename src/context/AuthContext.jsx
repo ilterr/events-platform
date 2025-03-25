@@ -65,7 +65,6 @@ export const AuthProvider = ({ children }) => {
             setUserRole("user");
           }
         } catch (error) {
-          console.log(error.message);
           setUserRole("user");
         }
       };

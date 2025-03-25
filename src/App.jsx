@@ -9,6 +9,7 @@ import EventPage from "./pages/EventPage";
 import CreateEvent from "./components/CreateEvent";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import EditEvent from "./components/EditEvent";
 
 function App() {
   return (
@@ -19,12 +20,27 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/events/:id" element={<EventPage />} />
-          <Route path="/createevent" element={<CreateEvent />} />
           <Route
             path="/dashboard"
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/events/:id/edit"
+            element={
+              <PrivateRoute requiredRole="staff">
+                <EditEvent />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/createevent"
+            element={
+              <PrivateRoute requiredRole="staff">
+                <CreateEvent />
               </PrivateRoute>
             }
           />
