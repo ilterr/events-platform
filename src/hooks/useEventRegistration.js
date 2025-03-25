@@ -23,7 +23,6 @@ export const useEventRegistration = (eventId, userId) => {
         setIsRegistered(false);
       }
     } catch (error) {
-      console.log("Error checking registration:", error.message);
       setError(error);
     } finally {
       setIsLoading(false);
