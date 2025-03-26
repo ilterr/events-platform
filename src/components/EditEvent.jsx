@@ -52,6 +52,10 @@ const EditEvent = () => {
     if (result.success) {
       navigate(`/events/${id}`);
     }
+
+    if (!result.success) {
+      setError(result.message);
+    }
   };
 
   if (isLoading) return <Typography>Loading...</Typography>;
@@ -64,7 +68,7 @@ const EditEvent = () => {
           Edit Event
         </Typography>
 
-        <Box component="form" sx={{ mt: 3 }}>
+        <Box component="form" sx={{ mt: 3 }} aria-label="Edit an event">
           <TextField
             fullWidth
             label="Event Name"
@@ -72,6 +76,7 @@ const EditEvent = () => {
             value={eventData.name || ""}
             onChange={handleInputChange}
             margin="normal"
+            aria-label="Event Name"
           />
           <TextField
             fullWidth
@@ -82,6 +87,7 @@ const EditEvent = () => {
             margin="normal"
             multiline
             rows={4}
+            aria-label="Event Description"
           />
           <TextField
             fullWidth
@@ -90,6 +96,7 @@ const EditEvent = () => {
             value={eventData.location || ""}
             onChange={handleInputChange}
             margin="normal"
+            aria-label="Event Location"
           />
           <TextField
             fullWidth
@@ -99,6 +106,7 @@ const EditEvent = () => {
             value={eventData.event_date || ""}
             onChange={handleInputChange}
             margin="normal"
+            aria-label="Event Date"
           />
           <TextField
             fullWidth
@@ -108,6 +116,7 @@ const EditEvent = () => {
             value={eventData.start_time || ""}
             onChange={handleInputChange}
             margin="normal"
+            aria-label="Event Start Time"
           />
           <TextField
             fullWidth
@@ -117,6 +126,7 @@ const EditEvent = () => {
             value={eventData.end_time || ""}
             onChange={handleInputChange}
             margin="normal"
+            aria-label="Event End Time"
           />
           <TextField
             fullWidth
@@ -125,6 +135,7 @@ const EditEvent = () => {
             value={eventData.event_image || ""}
             onChange={handleInputChange}
             margin="normal"
+            aria-label="Event Image URL"
           />
 
           <Button

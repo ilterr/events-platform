@@ -5,15 +5,33 @@ import {
   Typography,
   Box,
   CardActionArea,
+  useTheme,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
 
 function EventCard({ event }) {
+  const theme = useTheme();
   return (
-    <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <CardActionArea component={Link} to={`/events/${event.id}`}>
+    <Card
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: theme.palette.background.paper,
+        "&:hover": {
+          boxShadow: `0 8px 16px ${theme.palette.primary.main}`,
+          transform: "translateY(-5px)",
+        },
+        transition: "all 0.3s ease",
+      }}
+    >
+      <CardActionArea
+        component={Link}
+        to={`/events/${event.id}`}
+        aria-label={`View ${event.name}`}
+      >
         {event.image_url && (
           <CardMedia
             component="img"
@@ -26,7 +44,7 @@ function EventCard({ event }) {
           />
         )}
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography color="primary" gutterBottom variant="h5" component="h2">
             {event.name}
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>

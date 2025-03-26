@@ -14,7 +14,7 @@ export const useEventRegistration = (eventId, userId) => {
         .select("*")
         .eq("event_id", eventId)
         .eq("user_id", userId)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
       if (data) {

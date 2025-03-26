@@ -9,19 +9,19 @@ import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976d2",
+      main: "#2A4365",
     },
     secondary: {
-      main: "#f50057",
+      main: "#38A169",
     },
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 8,
-        },
-      },
+    success: {
+      main: "#D69E2E",
+    },
+    background: {
+      default: "#F7FAFC",
+    },
+    text: {
+      primary: "#1A2O2C",
     },
   },
 });
