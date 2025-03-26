@@ -36,7 +36,7 @@ const EventsList = () => {
   }
 
   return (
-    <Box>
+    <Box size={{ xs: 12, sm: 6, md: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
         Upcoming Events
       </Typography>

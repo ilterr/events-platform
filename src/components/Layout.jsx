@@ -1,14 +1,23 @@
-import { AppBar, Toolbar, Typography, Container, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Button,
+  IconButton,
+  Box,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { useTheme } from "@mui/material/styles";
+import HomeIcon from "@mui/icons-material/Home";
 function Layout({ children }) {
   const { session, signOut } = UserAuth();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-
+  const theme = useTheme();
   const handleSignOut = async () => {
     try {
       await signOut();
@@ -48,19 +57,22 @@ function Layout({ children }) {
           mb: 2,
         }}
       >
-        <Toolbar>
-          <Typography
-            variant="h6"
+        <Toolbar sx={{ px: { xs: 1, sm: 2 } }}>
+          <IconButton
             component={Link}
             to="/"
+            aria-label="Home"
             sx={{
-              flexGrow: 1,
               color: "white",
-              fontWeight: "bold",
+              mr: 2,
+              "&:hover": {
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+              },
             }}
           >
-            Community Events
-          </Typography>
+            <HomeIcon sx={{ fontSize: { xs: "1.5rem", sm: "1.8rem" } }} />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }} />
           {session ? (
             <>
               <Button

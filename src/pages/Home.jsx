@@ -17,10 +17,10 @@ const Home = () => {
         }}
       >
         <Typography variant="h3" component="h1" gutterBottom>
-          Community Events
+          Community Active
         </Typography>
         <Typography variant="h6" sx={{ mb: 3, opacity: 0.9 }}>
-          Discover and join local sports events that bring people together
+          Discover and join your local events that bring people together.
         </Typography>
       </Box>
       <EventList />
