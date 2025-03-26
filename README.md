@@ -55,15 +55,6 @@ _Staff Account:_
 - Access your dashboard to view your registered events
 - Staff members can create new events
 
-## Additional Features to Come
-
-- Improved form validation on sign-in and sign-up pages.
-- Users can unregister from events.
-- Staff members can manage and control events.
-- Enhanced error handling for improved user experience.
-- UI improvements include confirmation dialogs, search and sort functionality, and EventList pagination.
-- Improved navigation to enhance user experience.
-
 ## Project Link:
 
 [https://github.com/ilterr/events-platform]

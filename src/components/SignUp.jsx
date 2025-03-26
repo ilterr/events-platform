@@ -121,6 +121,7 @@ const SignUp = () => {
               align="center"
               sx={{ mt: 2 }}
               role="alert"
+              aria-live="assertive"
             >
               {error.submit}
             </Typography>

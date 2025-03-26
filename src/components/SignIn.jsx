@@ -63,7 +63,12 @@ const SignIn = () => {
           </MuiLink>
         </Typography>
 
-        <Box component="form" onSubmit={handleSignIn} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          onSubmit={handleSignIn}
+          sx={{ mt: 3 }}
+          aria-label="Sign in to your account"
+        >
           <TextField
             fullWidth
             label="Email"
@@ -74,6 +79,7 @@ const SignIn = () => {
             error={!!error.email}
             helperText={error.email}
             margin="normal"
+            aria-label="Email"
           />
 
           <TextField
@@ -86,6 +92,7 @@ const SignIn = () => {
             error={!!error.password}
             helperText={error.password}
             margin="normal"
+            aria-label="Password"
           />
 
           <Button
@@ -95,6 +102,7 @@ const SignIn = () => {
             color="primary"
             disabled={isLoading}
             sx={{ mt: 3 }}
+            aria-label="Sign in"
           >
             {isLoading ? (
               <>
@@ -111,6 +119,7 @@ const SignIn = () => {
               align="center"
               sx={{ mt: 2 }}
               role="alert"
+              aria-live="assertive"
             >
               {error.submit}
             </Typography>

@@ -19,7 +19,7 @@ const Dashboard = () => {
   const { events: myEvents, isLoading, error } = useUserEvents(userId);
   const navigate = useNavigate();
 
-  const handleEventClick = (eventId) => {
+  const navigateToEvent = (eventId) => {
     navigate(`/events/${eventId}`);
   };
 
@@ -69,7 +69,11 @@ const Dashboard = () => {
               Your Upcoming Events
             </Typography>
             {isLoading ? (
-              <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Box
+                sx={{ display: "flex", justifyContent: "center" }}
+                role="status"
+                aria-live="polite"
+              >
                 <CircularProgress size={24} />
               </Box>
             ) : error ? (
@@ -83,7 +87,7 @@ const Dashboard = () => {
                       cursor: "pointer",
                       mb: 2,
                     }}
-                    onClick={() => handleEventClick(event.id)}
+                    onClick={() => navigateToEvent(event.id)}
                   >
                     <ListItemText
                       primary={event.name}

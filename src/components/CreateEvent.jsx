@@ -27,7 +27,7 @@ const CreateEvent = () => {
     setNewEvent((prev) => ({ ...prev, event_date: date }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleCreateEvent = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -66,7 +66,12 @@ const CreateEvent = () => {
           Create an Event
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          onSubmit={handleCreateEvent}
+          sx={{ mt: 3 }}
+          aria-label="Create an event"
+        >
           <TextField
             fullWidth
             label="Event Name"
@@ -75,6 +80,7 @@ const CreateEvent = () => {
             required
             value={newEvent.name}
             onChange={handleChange}
+            aria-label="Event Name"
           />
 
           <TextField
@@ -86,6 +92,7 @@ const CreateEvent = () => {
             rows={4}
             value={newEvent.description}
             onChange={handleChange}
+            aria-label="Event Description"
           />
 
           <TextField
@@ -96,6 +103,7 @@ const CreateEvent = () => {
             required
             value={newEvent.location}
             onChange={handleChange}
+            aria-label="Event Location"
           />
 
           <DatePicker
@@ -104,6 +112,7 @@ const CreateEvent = () => {
             required
             onChange={handleDateChange}
             slotProps={{ textField: { fullWidth: true, margin: "normal" } }}
+            aria-label="Event Date"
           />
 
           <TextField
@@ -115,6 +124,7 @@ const CreateEvent = () => {
             required
             value={newEvent.start_time}
             onChange={handleChange}
+            aria-label="Event Start Time"
           />
 
           <TextField
@@ -126,6 +136,7 @@ const CreateEvent = () => {
             required
             value={newEvent.end_time}
             onChange={handleChange}
+            aria-label="Event End Time"
           />
 
           <TextField
@@ -135,6 +146,8 @@ const CreateEvent = () => {
             margin="normal"
             value={newEvent.image_url}
             onChange={handleChange}
+            aria-invalid={!newEvent.image_url}
+            aria-label="Event Image URL"
           />
 
           <Button
@@ -152,6 +165,7 @@ const CreateEvent = () => {
               align="center"
               sx={{ mt: 2 }}
               role="alert"
+              aria-live="assertive"
             >
               Error creating event: {error}
             </Typography>

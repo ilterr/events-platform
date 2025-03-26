@@ -8,7 +8,11 @@ const EventsList = () => {
 
   if (isLoading) {
     return (
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box
+        sx={{ display: "flex", justifyContent: "center" }}
+        role="status"
+        aria-live="polite"
+      >
         <CircularProgress />
       </Box>
     );
@@ -16,7 +20,12 @@ const EventsList = () => {
 
   if (error) {
     return (
-      <Typography color="error" align="center" role="alert">
+      <Typography
+        color="error"
+        align="center"
+        role="alert"
+        aria-live="assertive"
+      >
         Error loading events: {error}
       </Typography>
     );
