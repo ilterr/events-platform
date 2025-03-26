@@ -25,6 +25,7 @@ function EventCard({ event }) {
           transform: "translateY(-5px)",
         },
         transition: "all 0.3s ease",
+        borderRadius: { xs: 1, sm: 2 },
       }}
     >
       <CardActionArea
@@ -36,24 +37,47 @@ function EventCard({ event }) {
           <CardMedia
             component="img"
             sx={{
-              height: { xs: 140, sm: 200, md: 250 },
+              height: { xs: 200, sm: 250 },
               objectFit: "cover",
             }}
             image={event.image_url}
             alt={event.name}
           />
         )}
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Typography color="primary" gutterBottom variant="h5" component="h2">
+        <CardContent
+          sx={{
+            p: { xs: 2, sm: 1 },
+            flexGrow: 1,
+            minHeight: { xs: 80, sm: 100 },
+          }}
+        >
+          <Typography
+            color="primary"
+            gutterBottom
+            variant="h5"
+            component="h2"
+            sx={{ fontSize: { xs: "1.2rem", sm: "1.5rem" } }}
+          >
             {event.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              mb: 1,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: 4,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
             {event.description}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardContent>
-        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "flex-start", mb: 2 }}>
           <CalendarTodayIcon fontSize="small" sx={{ mr: 1 }} />
           <Typography variant="body2">
             {event.event_date.replace(/-/g, "/") +
@@ -61,7 +85,7 @@ function EventCard({ event }) {
               event.start_time.slice(0, 5)}
           </Typography>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "flex-start", mb: 1 }}>
           <LocationOnIcon fontSize="small" sx={{ mr: 1 }} />
           <Typography variant="body2">{event.location}</Typography>
         </Box>
