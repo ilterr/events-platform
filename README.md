@@ -53,7 +53,7 @@ _Staff Account:_
 - Visit the homepage to view upcoming events
 - Sign up or sign in to register for events
 - Access your dashboard to view your registered events
-- Staff members can create new events
+- Staff members can create new events and edit existing events
 
 ## Project Link:
 

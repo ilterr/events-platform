@@ -46,9 +46,9 @@ function EventCard({ event }) {
         )}
         <CardContent
           sx={{
-            p: { xs: 2, sm: 1 },
+            p: { xs: 1.5, sm: 1 },
             flexGrow: 1,
-            minHeight: { xs: 80, sm: 100 },
+            minHeight: { xs: 60, sm: 100 },
           }}
         >
           <Typography
@@ -56,7 +56,11 @@ function EventCard({ event }) {
             gutterBottom
             variant="h5"
             component="h2"
-            sx={{ fontSize: { xs: "1.2rem", sm: "1.5rem" } }}
+            sx={{
+              fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.5rem" },
+              lineHeight: 1.5,
+              mb: { xs: 0.5, sm: 1 },
+            }}
           >
             {event.name}
           </Typography>

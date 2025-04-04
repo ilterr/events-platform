@@ -7,6 +7,7 @@ import {
   ListItem,
   ListItemText,
   CircularProgress,
+  useTheme,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ import { UserAuth } from "../context/AuthContext";
 import { useUserEvents } from "../hooks/useUserEvents";
 
 const Dashboard = () => {
+  const theme = useTheme();
   const { session, userRole } = UserAuth();
   const userId = session?.user?.id;
   const { events: myEvents, isLoading, error } = useUserEvents(userId);
@@ -24,11 +26,25 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ p: 4, bgcolor: "#f5f5f5", minHeight: "100vh" }}>
-      <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
+    <Box
+      sx={{
+        p: 4,
+        bgcolor: theme.palette.background.default,
+        minHeight: "100vh",
+      }}
+    >
+      <Typography
+        variant="h4"
+        component="h1"
+        sx={{
+          color: theme.palette.primary.main,
+          fontSize: { xs: "1.5rem", md: "2rem" },
+          mb: 1,
+        }}
+      >
         Dashboard
       </Typography>
-      <Typography variant="h6" sx={{ mb: 4 }}>
+      <Typography variant="h6" sx={{ color: "text.secondary", mb: 3 }}>
         Welcome
       </Typography>
 
@@ -40,12 +56,21 @@ const Dashboard = () => {
               height: "auto",
               borderRadius: 2,
               boxShadow: 3,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                boxShadow: `0 8px 16px ${theme.palette.primary.main}`,
+                transform: "translateY(-5px)",
+              },
             }}
           >
             <Typography
               variant="h6"
               gutterBottom
-              sx={{ fontWeight: "bold", color: "primary.main" }}
+              sx={{
+                fontWeight: "bold",
+                color: theme.palette.primary.main,
+                fontSize: { xs: "1.1rem", sm: "1.3rem" },
+              }}
             >
               My Profile
             </Typography>
@@ -59,6 +84,11 @@ const Dashboard = () => {
               height: "auto",
               borderRadius: 2,
               boxShadow: 3,
+              transition: "all 0.3s ease",
+              "&:hover": {
+                boxShadow: `0 8px 16px ${theme.palette.primary.main}`,
+                transform: "translateY(-5px)",
+              },
             }}
           >
             <Typography
@@ -118,6 +148,11 @@ const Dashboard = () => {
                 flexDirection: "column",
                 borderRadius: 2,
                 boxShadow: 3,
+                transition: "all 0.3s ease",
+                "&:hover": {
+                  boxShadow: `0 8px 16px ${theme.palette.primary.main}`,
+                  transform: "translateY(-5px)",
+                },
               }}
             >
               <Typography
@@ -130,6 +165,10 @@ const Dashboard = () => {
                   color: "primary.main",
                   fontWeight: "bold",
                   flexGrow: 1,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    color: theme.palette.secondary.main,
+                  },
                 }}
               >
                 Create an Event

@@ -29,6 +29,17 @@ const CreateEvent = () => {
 
   const handleCreateEvent = async (e) => {
     e.preventDefault();
+
+    if (!newEvent.name || !newEvent.location || !newEvent.event_date) {
+      setError("Please fill in all required fields");
+      return;
+    }
+
+    if (newEvent.start_time >= newEvent.end_time) {
+      setError("End time must be after start time");
+      return;
+    }
+
     setIsLoading(true);
 
     try {

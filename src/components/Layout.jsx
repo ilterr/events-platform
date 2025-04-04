@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTheme } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
+
 function Layout({ children }) {
   const { session, signOut } = UserAuth();
   const navigate = useNavigate();

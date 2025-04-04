@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Box,
@@ -30,19 +30,28 @@ const EventPage = () => {
   const navigate = useNavigate();
   const { event, isLoading, error } = useEventById(id);
   const { session, userRole } = UserAuth();
+  const [isStaff, setIsStaff] = useState(false);
   const userId = session?.user?.id;
   const { isRegistered, registerForEvent, unregisterFromEvent } =
     useEventRegistration(id, userId);
   const { refreshEvents } = useUserEvents(userId);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
+  useEffect(() => {
+    if (userRole === "staff") {
+      setIsStaff(true);
+    }
+  }, [userRole]);
+
   if (isLoading) return <CircularProgress />;
+
   if (!event)
     return (
       <Typography color="info" align="center">
         Event not found
       </Typography>
     );
+
   if (error)
     return (
       <Typography color="error" align="center">
@@ -81,11 +90,10 @@ const EventPage = () => {
     <Box
       sx={{
         maxWidth: 800,
-        width: { xs: "95%", sm: "90%", md: "100%" },
+        width: "100%",
         mx: "auto",
-        p: 3,
-        my: 5,
-        size: { xs: 12, sm: 6, md: 4 },
+        p: { xs: 2, sm: 3 },
+        my: { xs: 3, sm: 5 },
       }}
     >
       <Card
@@ -133,18 +141,20 @@ const EventPage = () => {
             >
               {event.name}
             </Typography>
-            {userRole === "staff" && (
+            {isStaff && (
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "column", sm: "row" },
+                  flexDirection: { xs: "row", sm: "row" },
+                  justifyContent: { xs: "space-between" },
                   gap: { xs: 1, sm: 2 },
-                  mt: { xs: 2, sm: 0 },
+                  width: { xs: "100%", sm: "30%" },
                 }}
               >
                 <Button
                   size="small"
                   fullWidth
+                  variant="outlined"
                   startIcon={<EditIcon />}
                   onClick={() => navigate(`/events/${id}/edit`)}
                 >
@@ -153,6 +163,8 @@ const EventPage = () => {
                 <Button
                   size="small"
                   fullWidth
+                  variant="outlined"
+                  color="error"
                   startIcon={<DeleteIcon />}
                   onClick={() => setShowDeleteModal(true)}
                 >
@@ -203,6 +215,11 @@ const EventPage = () => {
               variant={isRegistered ? "outlined" : "contained"}
               color={isRegistered ? "primary" : "success"}
               onClick={handleRegister}
+              aria-label={
+                isRegistered
+                  ? "Unregister from this event"
+                  : "Register for this event"
+              }
               sx={{
                 py: { xs: 1.5, sm: 1 },
                 fontSize: { xs: "0.9rem", sm: "1rem" },
@@ -210,12 +227,12 @@ const EventPage = () => {
             >
               {isRegistered ? "Unregister" : "Register"}
             </Button>
-
             <Button
               fullWidth
               variant="outlined"
               startIcon={<CalendarTodayIcon />}
               onClick={addToGoogleCalendar}
+              aria-label="Add this event to Google Calendar"
               sx={{ py: { xs: 1, sm: "inherit" } }}
             >
               Add to Google Calendar

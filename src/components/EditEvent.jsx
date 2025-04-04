@@ -46,7 +46,7 @@ const EditEvent = () => {
       event_date: eventData.event_date,
       start_time: eventData.start_time,
       end_time: eventData.end_time,
-      event_image: eventData.event_image,
+      image_url: eventData.image_url,
     });
 
     if (result.success) {
@@ -131,8 +131,8 @@ const EditEvent = () => {
           <TextField
             fullWidth
             label="Event Image URL"
-            name="event_image"
-            value={eventData.event_image || ""}
+            name="image_url"
+            value={eventData.image_url || ""}
             onChange={handleInputChange}
             margin="normal"
             aria-label="Event Image URL"
